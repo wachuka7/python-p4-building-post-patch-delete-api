@@ -107,6 +107,28 @@ def review_by_id(id):
         )
         return response
 
+@app.route('/reviews', methods=['GET', 'POST'])
+def reviews():
+    if request.method=='GET':
+        reviews=[]
+        for review in Review.query.all():
+            review_dict=review.to_dict()
+            reviews.append(review_dict)
+
+        response= make_response(
+            reviews,
+            200
+        )
+        return response
+    
+    elif request.method =='POST':
+        response_body= {}
+        response= make_response(
+            response_body,
+            201
+        )
+        return response
+    
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
